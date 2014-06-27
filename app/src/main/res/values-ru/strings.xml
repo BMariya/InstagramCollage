@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="GetPhotos">Получить последние фотографии</string>
+    <string name="GetCollage">Давай коллаж</string>
+    <string name="Collage">Коллаж</string>
+    <string name="Send">Отправить</string>
+    <string name="Cancel">Отмена</string>
+    <string name="SendWith">Отправить с помощью...</string>
+    <string name="EnterUserLogin">Введите логин пользователя</string>
+
+</resources>

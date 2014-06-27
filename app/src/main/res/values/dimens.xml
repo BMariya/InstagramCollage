@@ -1,0 +1,5 @@
+<resources>
+
+    <dimen name="indent_common">10dp</dimen>
+
+</resources>

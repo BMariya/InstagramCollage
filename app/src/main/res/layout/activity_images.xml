@@ -1,0 +1,58 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/indent_common">
+
+    <EditText
+        android:id="@+id/AI_Login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/indent_common"
+        android:hint="@string/EnterUserLogin"
+        android:enabled="false"/>
+
+    <Button
+        android:id="@+id/AI_GetImages"
+        android:text="@string/GetPhotos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/AI_Login"
+        android:enabled="false"/>
+
+    <Button
+        android:id="@+id/AI_MakeCollage"
+        android:text="@string/GetCollage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:layout_alignParentBottom="true"/>
+
+    <ListView
+        android:id="@+id/AI_ImageList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/AI_GetImages"
+        android:layout_above="@id/AI_MakeCollage"
+        android:layout_marginBottom="@dimen/indent_common"
+        android:layout_marginTop="@dimen/indent_common"/>
+
+    <FrameLayout
+        android:id="@+id/AI_Progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/AI_ImageList"
+        android:layout_alignBottom="@id/AI_ImageList"
+        android:background="@drawable/back_progress"
+        android:visibility="invisible"
+        android:clickable="true"
+        android:longClickable="true">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLargeInverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+    </FrameLayout>
+
+</RelativeLayout>
