@@ -2,6 +2,7 @@ package com.redmandrobottest.instagramcollage.application;
 
 import android.app.Application;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.redmandrobottest.instagramcollage.activity.ImagesActivity;
 
@@ -13,11 +14,13 @@ public class InstagramCollageApp extends Application {
     private boolean inWork;
     private ArrayList<Drawable> images;
     private ArrayList<Boolean> imagesChecked;
+    private LocalBroadcastManager broadcastManager;
 
 	public void onCreate() {
 		super.onCreate();
 
         inWork = false;
+        broadcastManager = LocalBroadcastManager.getInstance(this);
 	}
 
     public void setActivity(ImagesActivity activity) {
@@ -69,6 +72,10 @@ public class InstagramCollageApp extends Application {
             }
         }
         return countChecked;
+    }
+
+    public LocalBroadcastManager getBroadcastManager() {
+        return broadcastManager;
     }
 
 }

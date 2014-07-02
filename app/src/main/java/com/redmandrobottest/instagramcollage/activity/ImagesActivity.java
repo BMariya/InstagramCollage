@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -21,9 +22,9 @@ import com.redmandrobottest.instagramcollage.dialod.CollageViewSendDialog;
 import com.redmandrobottest.instagramcollage.provider.FileProvider;
 import com.redmandrobottest.instagramcollage.R;
 import com.redmandrobottest.instagramcollage.application.InstagramCollageApp;
+import com.redmandrobottest.instagramcollage.receiver.ReceiverUserID;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -52,6 +53,7 @@ public class ImagesActivity extends FragmentActivity implements View.OnClickList
     private View progress;
     private ImageAdapter adapter;
     private byte[] bitmapImage;
+    private ReceiverUserID receiverUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +76,23 @@ public class ImagesActivity extends FragmentActivity implements View.OnClickList
             bitmapImage = savedInstanceState.getByteArray(Params.BitmapImage);
         }
         setStates(application.isWorked());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        receiverUserID = new ReceiverUserID(this);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ReceiverUserID.Params.ACTION);
+        application.getBroadcastManager().registerReceiver(receiverUserID, filter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        application.getBroadcastManager().unregisterReceiver(receiverUserID);
     }
 
     public void drawResults() {
@@ -143,22 +162,52 @@ public class ImagesActivity extends FragmentActivity implements View.OnClickList
             public void run() {
                 try {
                     application.setWorked(true);
-                    URL example = new URL("https://api.instagram.com/v1/users/search?q=" + loginEdit.getText().toString() + "&client_id=" + Params.CLIENT_ID);
-                    URLConnection connection = example.openConnection();
+                    URL urlUser = new URL("https://api.instagram.com/v1/users/search?q=" + loginEdit.getText().toString() + "&client_id=" + Params.CLIENT_ID);
+                    URLConnection connection = urlUser.openConnection();
                     BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     String line;
-                    String id = "";
+                    String id = null;
                     while ((line = in.readLine()) != null) {
                         JSONObject ob = new JSONObject(line);
                         JSONArray data = ob.getJSONArray("data");
                         JSONObject jo = (JSONObject) data.get(0);
                         id = (String) jo.get("id");
                     }
-                    example = new URL("https://api.instagram.com/v1/users/" + id + "/media/recent/?client_id=" + Params.CLIENT_ID);
-                    connection = example.openConnection();
-                    in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    if (id != null && id.length() != 0) {
+                        Intent oIntent = new Intent(ReceiverUserID.Params.ACTION);
+                        oIntent.putExtra(ReceiverUserID.Params.UserID, id);
+                        application.getBroadcastManager().sendBroadcast(oIntent);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    application.setWorked(false);
+                    runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            setStates(false);
+                        }
+
+                    });
+                }
+            }
+
+        });
+        thread.start();
+    }
+
+    public void getUserData(final String id) {
+        Thread thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    URL urlData = new URL("https://api.instagram.com/v1/users/" + id + "/media/recent/?client_id=" + Params.CLIENT_ID);
+                    URLConnection connection = urlData.openConnection();
+                    BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     final ArrayList<Drawable> images = new ArrayList<Drawable>();
                     final ArrayList<Boolean> imagesChecked = new ArrayList<Boolean>();
+                    String line;
                     while ((line = in.readLine()) != null) {
                         JSONObject ob = new JSONObject(line);
                         JSONArray data = ob.getJSONArray("data");
@@ -179,9 +228,7 @@ public class ImagesActivity extends FragmentActivity implements View.OnClickList
                         }
 
                     });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
+                }  catch (Exception e) {
                     e.printStackTrace();
                 } finally {
                     application.setWorked(false);
@@ -268,6 +315,5 @@ public class ImagesActivity extends FragmentActivity implements View.OnClickList
 
         saveState.putByteArray(Params.BitmapImage, bitmapImage);
     }
-
 
 }
