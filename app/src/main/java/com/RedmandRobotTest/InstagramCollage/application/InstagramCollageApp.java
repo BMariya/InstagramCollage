@@ -1,9 +1,9 @@
-package com.RedmandRobotTest.InstagramCollage.application;
+package com.redmandrobottest.instagramcollage.application;
 
 import android.app.Application;
 import android.graphics.drawable.Drawable;
 
-import com.RedmandRobotTest.InstagramCollage.Activity.ImagesActivity;
+import com.redmandrobottest.instagramcollage.activity.ImagesActivity;
 
 import java.util.ArrayList;
 

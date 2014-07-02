@@ -1,4 +1,4 @@
-package com.RedmandRobotTest.InstagramCollage.Activity;
+package com.redmandrobottest.instagramcollage.activity;
 
 import android.app.Dialog;
 import android.content.ContentValues;
@@ -16,11 +16,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.RedmandRobotTest.InstagramCollage.Adapter.ImageAdapter;
-import com.RedmandRobotTest.InstagramCollage.Dialod.CollageViewSendDialog;
-import com.RedmandRobotTest.InstagramCollage.Provider.FileProvider;
-import com.RedmandRobotTest.InstagramCollage.R;
-import com.RedmandRobotTest.InstagramCollage.application.InstagramCollageApp;
+import com.redmandrobottest.instagramcollage.adapter.ImageAdapter;
+import com.redmandrobottest.instagramcollage.dialod.CollageViewSendDialog;
+import com.redmandrobottest.instagramcollage.provider.FileProvider;
+import com.redmandrobottest.instagramcollage.R;
+import com.redmandrobottest.instagramcollage.application.InstagramCollageApp;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +31,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;

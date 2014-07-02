@@ -5,7 +5,7 @@ android {
     buildToolsVersion "19.1.0"
 
     defaultConfig {
-        applicationId "com.RedmandRobot.InstagramCollage"
+        applicationId "com.redmandrobottest.instagramcollage"
         minSdkVersion 9
         targetSdkVersion 19
         versionCode 1

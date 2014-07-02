@@ -1,4 +1,4 @@
-package com.RedmandRobotTest.InstagramCollage.Dialod;
+package com.redmandrobottest.instagramcollage.dialod;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,8 +9,8 @@ import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.RedmandRobotTest.InstagramCollage.Activity.ImagesActivity;
-import com.RedmandRobotTest.InstagramCollage.R;
+import com.redmandrobottest.instagramcollage.activity.ImagesActivity;
+import com.redmandrobottest.instagramcollage.R;
 
 public class CollageViewSendDialog extends DialogFragment {
 

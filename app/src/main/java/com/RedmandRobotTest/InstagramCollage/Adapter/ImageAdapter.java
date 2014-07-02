@@ -1,4 +1,4 @@
-package com.RedmandRobotTest.InstagramCollage.Adapter;
+package com.redmandrobottest.instagramcollage.adapter;
 
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -8,9 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 
-import com.RedmandRobotTest.InstagramCollage.Activity.ImagesActivity;
-import com.RedmandRobotTest.InstagramCollage.R;
-import com.RedmandRobotTest.InstagramCollage.application.InstagramCollageApp;
+import com.redmandrobottest.instagramcollage.activity.ImagesActivity;
+import com.redmandrobottest.instagramcollage.R;
+import com.redmandrobottest.instagramcollage.application.InstagramCollageApp;
 
 public class ImageAdapter extends BaseAdapter {
 
@@ -37,16 +37,32 @@ public class ImageAdapter extends BaseAdapter {
 		return position;
 	}
 
+    private static class ViewHolder {
+
+        CheckBox checkBox;
+        ImageView imageView;
+
+        public ViewHolder(View view) {
+            checkBox = (CheckBox) view.findViewById(R.id.LI_CheckBox);
+            imageView = (ImageView) view.findViewById(R.id.LI_Image);
+        }
+
+    }
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder;
 		if (convertView == null) {
             convertView = inflater.inflate(R.layout.list_item, null);
-		}
-		CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.LI_CheckBox);
-        checkBox.setChecked(application.getImageCheked().get(position));
-        checkBox.setTag(position);
-        checkBox.setOnClickListener(onClickCheck);
-        ((ImageView) convertView.findViewById(R.id.LI_Image)).setImageDrawable(getItem(position));
+            viewHolder = new ViewHolder(convertView);
+            convertView.setTag(viewHolder);
+		} else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+        viewHolder.checkBox.setChecked(application.getImageCheked().get(position));
+        viewHolder.checkBox.setTag(position);
+        viewHolder.checkBox.setOnClickListener(onClickCheck);
+        viewHolder.imageView.setImageDrawable(getItem(position));
 		return convertView;
 	}
 

@@ -1,4 +1,4 @@
-package com.RedmandRobotTest.InstagramCollage.Provider;
+package com.redmandrobottest.instagramcollage.provider;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
