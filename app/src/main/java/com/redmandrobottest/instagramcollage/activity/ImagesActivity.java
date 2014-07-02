@@ -23,6 +23,8 @@ import com.redmandrobottest.instagramcollage.provider.FileProvider;
 import com.redmandrobottest.instagramcollage.R;
 import com.redmandrobottest.instagramcollage.application.InstagramCollageApp;
 import com.redmandrobottest.instagramcollage.receiver.ReceiverUserID;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -30,7 +32,6 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
@@ -128,8 +129,11 @@ public class ImagesActivity extends FragmentActivity implements View.OnClickList
                 int firstCheckedImage;
                 for (firstCheckedImage = 0; firstCheckedImage < countImages; firstCheckedImage++) {
                     if (application.getImageCheked().get(firstCheckedImage)) {
-                        backgroundImage = drawableToBitmap(application.getImages().get(firstCheckedImage));
-                        break;
+                        try {
+                            backgroundImage = Picasso.with(ImagesActivity.this).load(application.getImages().get(firstCheckedImage)).get();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
                 Canvas comboImage = new Canvas(backgroundImage);
@@ -137,7 +141,11 @@ public class ImagesActivity extends FragmentActivity implements View.OnClickList
                 float dimensionImagesTop = backgroundImage.getHeight() / application.getCountCheckedImages();
                 for (int i = firstCheckedImage + 1; i < countImages; i++) {
                     if (application.getImageCheked().get(i)) {
-                        comboImage.drawBitmap(drawableToBitmap(application.getImages().get(i)), dimensionImagesLeft, dimensionImagesTop, null);
+                        try {
+                            comboImage.drawBitmap(Picasso.with(ImagesActivity.this).load(application.getImages().get(i)), dimensionImagesLeft, dimensionImagesTop, null);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         dimensionImagesLeft = 2 * dimensionImagesLeft;
                         dimensionImagesTop = 2 * dimensionImagesTop;
                     }
@@ -205,7 +213,7 @@ public class ImagesActivity extends FragmentActivity implements View.OnClickList
                     URL urlData = new URL("https://api.instagram.com/v1/users/" + id + "/media/recent/?client_id=" + Params.CLIENT_ID);
                     URLConnection connection = urlData.openConnection();
                     BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                    final ArrayList<Drawable> images = new ArrayList<Drawable>();
+                    final ArrayList<Uri> imagesUri = new ArrayList<Uri>();
                     final ArrayList<Boolean> imagesChecked = new ArrayList<Boolean>();
                     String line;
                     while ((line = in.readLine()) != null) {
@@ -216,7 +224,7 @@ public class ImagesActivity extends FragmentActivity implements View.OnClickList
                             JSONObject imagesUser = (JSONObject) jo.get("images");
                             JSONObject imageParams = (JSONObject) imagesUser.get("low_resolution");
                             String sURL = (String) imageParams.get("url");
-                            images.add(getImageByURL(sURL));
+                            imagesUri.add(Uri.parse(sURL));
                             imagesChecked.add(false);
                         }
                     }
@@ -224,7 +232,7 @@ public class ImagesActivity extends FragmentActivity implements View.OnClickList
 
                         @Override
                         public void run() {
-                            application.setImageData(images, imagesChecked);
+                            application.setImageData(imagesUri, imagesChecked);
                         }
 
                     });
@@ -245,30 +253,6 @@ public class ImagesActivity extends FragmentActivity implements View.OnClickList
 
         });
         thread.start();
-    }
-
-    public static Bitmap drawableToBitmap (Drawable drawable) {
-        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-        return bitmap;
-    }
-
-    private Drawable getImageByURL(String sUrl) throws IOException {
-        InputStream is = null;
-        try {
-            URL url = new URL(sUrl);
-            is = (InputStream) url.getContent();
-            return Drawable.createFromStream(is, "src");
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            if (is != null) {
-                is.close();
-            }
-        }
     }
 
     public DialogInterface.OnClickListener collageViewSendDialogButtonsClick = new DialogInterface.OnClickListener() {

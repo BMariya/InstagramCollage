@@ -1,5 +1,6 @@
 <resources>
 
     <dimen name="indent_common">10dp</dimen>
+    <dimen name="image_size">50dp</dimen>
 
 </resources>

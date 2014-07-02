@@ -1,6 +1,7 @@
 package com.redmandrobottest.instagramcollage.adapter;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,9 @@ import android.widget.ImageView;
 import com.redmandrobottest.instagramcollage.activity.ImagesActivity;
 import com.redmandrobottest.instagramcollage.R;
 import com.redmandrobottest.instagramcollage.application.InstagramCollageApp;
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
 
 public class ImageAdapter extends BaseAdapter {
 
@@ -29,7 +33,7 @@ public class ImageAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Drawable getItem(int position) {
+	public Uri getItem(int position) {
 		return application.getImages().get(position);
 	}
 
@@ -59,10 +63,10 @@ public class ImageAdapter extends BaseAdapter {
 		} else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.checkBox.setChecked(application.getImageCheked().get(position));
         viewHolder.checkBox.setTag(position);
         viewHolder.checkBox.setOnClickListener(onClickCheck);
-        viewHolder.imageView.setImageDrawable(getItem(position));
+        viewHolder.checkBox.setChecked(application.getImageCheked().get(position));
+        Picasso.with(activity).load(getItem(position)).into(viewHolder.imageView);
 		return convertView;
 	}
 
