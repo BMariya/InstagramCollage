@@ -1,4 +1,4 @@
-package com.redmandrobottest.instagramcollage.provider;
+package com.redmadrobottest.instagramcollage.provider;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -14,7 +14,7 @@ import java.io.OutputStream;
 public class FileProvider extends ContentProvider {
 
 	public static final class Params {
-		public static final Uri CONTENT_URI = Uri.parse("content://com.RedmandRobotTest.InstagramCollage.Providers.FileProvider/");
+		public static final Uri CONTENT_URI = Uri.parse("content://com.redmadrobottest.instagramcollage.providers.FileProvider/");
 		public static final String FileData = "FileData";
 	}
 	
@@ -22,7 +22,7 @@ public class FileProvider extends ContentProvider {
 	
 	@Override
 	public boolean onCreate() {
-		this.fileData = null;
+		fileData = null;
 		return(true);
 	}
 	

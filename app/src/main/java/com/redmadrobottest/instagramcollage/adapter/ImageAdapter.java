@@ -1,7 +1,5 @@
-package com.redmandrobottest.instagramcollage.adapter;
+package com.redmadrobottest.instagramcollage.adapter;
 
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,32 +7,32 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 
-import com.redmandrobottest.instagramcollage.activity.ImagesActivity;
-import com.redmandrobottest.instagramcollage.R;
-import com.redmandrobottest.instagramcollage.application.InstagramCollageApp;
-import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.redmadrobottest.instagramcollage.R;
+import com.redmadrobottest.instagramcollage.activity.ImageActivity;
+import com.redmadrobottest.instagramcollage.application.InstagramCollageApp;
 
 public class ImageAdapter extends BaseAdapter {
 
-    private ImagesActivity activity;
+    private ImageActivity activity;
     private InstagramCollageApp application;
     private LayoutInflater inflater;
+    private ImageLoader imageLoader;
 
-	public ImageAdapter(ImagesActivity activity) {
+	public ImageAdapter(ImageActivity activity) {
         this.activity = activity;
         application = (InstagramCollageApp) activity.getApplication();
         inflater = LayoutInflater.from(activity);
+        imageLoader = ImageLoader.getInstance();
 	}
 
 	public int getCount() {
-		return application.getImages() != null ? application.getImages().size() : 0;
+		return application.getImagesData() != null ? application.getImagesData().size() : 0;
 	}
 
 	@Override
-	public Uri getItem(int position) {
-		return application.getImages().get(position);
+	public String getItem(int position) {
+		return application.getImagesData().get(position).getLowResolutionUri();
 	}
 
 	public long getItemId(int position) {
@@ -65,8 +63,8 @@ public class ImageAdapter extends BaseAdapter {
         }
         viewHolder.checkBox.setTag(position);
         viewHolder.checkBox.setOnClickListener(onClickCheck);
-        viewHolder.checkBox.setChecked(application.getImageCheked().get(position));
-        Picasso.with(activity).load(getItem(position)).into(viewHolder.imageView);
+        viewHolder.checkBox.setChecked(application.getImagesData().get(position).getChecked());
+        imageLoader.displayImage(getItem(position), viewHolder.imageView);
 		return convertView;
 	}
 
@@ -74,7 +72,7 @@ public class ImageAdapter extends BaseAdapter {
 
         public void onClick(View v) {
             int position = (Integer) v.getTag();
-            application.getImageCheked().set(position, !application.getImageCheked().get(position));
+            application.getImagesData().get(position).setChecked(!application.getImagesData().get(position).getChecked());
             activity.setMakeCollageButtonState(false);
         }
 

@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.redmandrobottest.instagramcollage">
+    package="com.redmadrobottest.instagramcollage">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
-        android:name="com.redmandrobottest.instagramcollage.application.InstagramCollageApp"
+        android:name="com.redmadrobottest.instagramcollage.application.InstagramCollageApp"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
         <provider
-            android:name="com.redmandrobottest.instagramcollage.provider.FileProvider"
-            android:authorities="com.redmandrobottest.instagramcollage.Providers.FileProvider"
+            android:name="com.redmadrobottest.instagramcollage.provider.FileProvider"
+            android:authorities="com.redmadrobottest.instagramcollage.providers.FileProvider"
             android:exported="true" />
 
         <activity
-            android:name="com.redmandrobottest.instagramcollage.activity.ImagesActivity"
+            android:name=".activity.ImageActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="stateUnchanged|adjustResize">
 

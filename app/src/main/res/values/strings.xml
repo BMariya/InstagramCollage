@@ -2,12 +2,12 @@
 <resources>
 
     <string name="app_name">InstagramCollage</string>
+    <string name="EnterUserLogin">Enter user\'s login</string>
     <string name="GetPhotos">Get photos</string>
     <string name="GetCollage">Get collage</string>
     <string name="Collage">Collage</string>
     <string name="Send">Send</string>
     <string name="Cancel">Cancel</string>
-    <string name="SendWith">Send with...</string>
-    <string name="EnterUserLogin">Enter user\'s login</string>
+    <string name="SendWith">Send with…</string>
 
 </resources>

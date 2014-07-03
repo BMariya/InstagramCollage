@@ -1,4 +1,4 @@
-package com.redmandrobottest.instagramcollage.dialod;
+package com.redmadrobottest.instagramcollage.dialod;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,8 +9,8 @@ import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.redmandrobottest.instagramcollage.activity.ImagesActivity;
-import com.redmandrobottest.instagramcollage.R;
+import com.redmadrobottest.instagramcollage.activity.ImageActivity;
+import com.redmadrobottest.instagramcollage.R;
 
 public class CollageViewSendDialog extends DialogFragment {
 
@@ -22,8 +22,8 @@ public class CollageViewSendDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
         dialog.setTitle(R.string.Collage);
-        dialog.setPositiveButton(R.string.Send, ((ImagesActivity) getActivity()).collageViewSendDialogButtonsClick);
-        dialog.setNegativeButton(R.string.Cancel, ((ImagesActivity) getActivity()).collageViewSendDialogButtonsClick);
+        dialog.setPositiveButton(R.string.Send, ((ImageActivity) getActivity()).collageViewSendDialogButtonsClick);
+        dialog.setNegativeButton(R.string.Cancel, ((ImageActivity) getActivity()).collageViewSendDialogButtonsClick);
         byte[] bitmapArray = getArguments().getByteArray(Params.BitmapArray);
         Bitmap imageBitmap = BitmapFactory.decodeByteArray(bitmapArray, 0, bitmapArray.length);
         View dialogView = getActivity().getLayoutInflater().inflate(R.layout.dialog_collage, null);
