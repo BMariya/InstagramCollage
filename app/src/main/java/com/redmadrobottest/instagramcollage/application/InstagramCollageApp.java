@@ -25,9 +25,13 @@ public class InstagramCollageApp extends Application {
 
         inWork = false;
         broadcastManager = LocalBroadcastManager.getInstance(this);
-        DisplayImageOptions displayimageOptions = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).build();
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).
-                defaultDisplayImageOptions(displayimageOptions).build();
+        DisplayImageOptions displayimageOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .showImageOnLoading(android.R.drawable.progress_indeterminate_horizontal).build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration
+                .Builder(getApplicationContext())
+                .defaultDisplayImageOptions(displayimageOptions).build();
         ImageLoader.getInstance().init(config);
 	}
 
