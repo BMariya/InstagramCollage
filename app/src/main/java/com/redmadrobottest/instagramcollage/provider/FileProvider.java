@@ -14,7 +14,7 @@ import java.io.OutputStream;
 public class FileProvider extends ContentProvider {
 
 	public static final class Params {
-		public static final Uri CONTENT_URI = Uri.parse("content://com.redmadrobottest.instagramcollage.providers.FileProvider/");
+		public static final Uri CONTENT_URI = Uri.parse("content://com.redmadrobottest.instagramcollage.providers.fileprovider/");
 		public static final String FileData = "FileData";
 	}
 	

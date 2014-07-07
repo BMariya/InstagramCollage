@@ -14,7 +14,7 @@
 
         <provider
             android:name="com.redmadrobottest.instagramcollage.provider.FileProvider"
-            android:authorities="com.redmadrobottest.instagramcollage.providers.FileProvider"
+            android:authorities="com.redmadrobottest.instagramcollage.providers.fileprovider"
             android:exported="true" />
 
         <activity
