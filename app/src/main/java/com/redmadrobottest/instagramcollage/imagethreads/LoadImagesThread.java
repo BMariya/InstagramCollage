@@ -57,9 +57,6 @@ public class LoadImagesThread extends Thread {
                                 application.getBroadcastManager().sendBroadcast(intent);
                             }
                             if (application.getCountCheckedImages() == loadedImagesCounter) {
-                                Intent intent = new Intent(Receiver.Params.ACTION);
-                                intent.putExtra(Receiver.Params.ReceiveType, Receiver.ReceiveType.setStateFinish);
-                                application.getBroadcastManager().sendBroadcast(intent);
                                 (new MakeCollageThread(application)).start();
                             }
                         }
